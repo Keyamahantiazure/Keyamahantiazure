@@ -1,0 +1,57 @@
+{
+	"name": "wc_product_d",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics_csv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "productid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "productname",
+				"type": "varchar"
+			},
+			{
+				"name": "sellstartdate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "sellenddate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "productcategoryid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "productcategoryname",
+				"type": "varchar"
+			},
+			{
+				"name": "productmodelid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "productmodelname",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "wc_product_d"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

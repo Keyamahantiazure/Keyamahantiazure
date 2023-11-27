@@ -1,0 +1,82 @@
+{
+	"name": "AzureSynapseAnalyticsTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalytics_csv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "salessk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "salesorderid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ORDERDATE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "STATUS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SALESORDERNUMBER",
+				"type": "varchar"
+			},
+			{
+				"name": "PURCHASEORDERNUMBER",
+				"type": "varchar"
+			},
+			{
+				"name": "ACCOUNTNUMBER",
+				"type": "varchar"
+			},
+			{
+				"name": "customerid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "orderqty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "productid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "unitprice",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "totalamount",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "rowguid",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "wc_sales_f"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,62 @@
+{
+	"name": "AzureSqlTablelogcsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Correlationid",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Operationname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Eventcategory",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Level",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Subscription",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Eventinitiatedby",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resourcetype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resourcegroup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Resource",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "log_csv"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

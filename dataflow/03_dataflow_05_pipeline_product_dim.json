@@ -1,0 +1,137 @@
+{
+	"name": "03_dataflow_05_pipeline_product_dim",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableproduct",
+						"type": "DatasetReference"
+					},
+					"name": "productsource"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableproductcategory",
+						"type": "DatasetReference"
+					},
+					"name": "productcategorysource"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableproductmodel",
+						"type": "DatasetReference"
+					},
+					"name": "productmodelsource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "wc_product_d",
+						"type": "DatasetReference"
+					},
+					"name": "productsink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "productjoincategory"
+				},
+				{
+					"name": "productjoincategoryjoinmodel"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductID as integer,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          Color as string,",
+				"          StandardCost as decimal(19,4),",
+				"          ListPrice as decimal(19,4),",
+				"          Size as string,",
+				"          Weight as decimal(8,2),",
+				"          ProductCategoryID as integer,",
+				"          ProductModelID as integer,",
+				"          SellStartDate as timestamp,",
+				"          SellEndDate as timestamp,",
+				"          DiscontinuedDate as timestamp,",
+				"          ThumbNailPhoto as binary,",
+				"          ThumbnailPhotoFileName as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> productsource",
+				"source(output(",
+				"          ProductCategoryID as integer,",
+				"          ParentProductCategoryID as integer,",
+				"          Name as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> productcategorysource",
+				"source(output(",
+				"          ProductModelID as integer,",
+				"          Name as string,",
+				"          CatalogDescription as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> productmodelsource",
+				"productsource, productcategorysource join(productsource@ProductCategoryID == productcategorysource@ProductCategoryID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> productjoincategory",
+				"productjoincategory, productmodelsource join(productsource@ProductModelID == productmodelsource@ProductModelID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> productjoincategoryjoinmodel",
+				"productjoincategoryjoinmodel sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          productid as integer,",
+				"          productname as string,",
+				"          sellstartdate as timestamp,",
+				"          sellenddate as timestamp,",
+				"          productcategoryid as integer,",
+				"          productcategoryname as string,",
+				"          productmodelid as integer,",
+				"          productmodelname as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          productid = ProductID,",
+				"          productname = productsource@Name,",
+				"          sellstartdate = SellStartDate,",
+				"          sellenddate = SellEndDate,",
+				"          productcategoryid = productcategorysource@ProductCategoryID,",
+				"          productcategoryname = productcategorysource@Name,",
+				"          productmodelid = productmodelsource@ProductModelID,",
+				"          productmodelname = productmodelsource@Name",
+				"     )) ~> productsink"
+			]
+		}
+	}
+}

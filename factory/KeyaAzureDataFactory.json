@@ -1,0 +1,9 @@
+{
+	"name": "KeyaAzureDataFactory",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "201c5f99-5f8c-494f-9047-7f2bd79e0f7a",
+		"tenantId": "5ae2316e-386e-44a3-bb58-5837e6676932"
+	}
+}
