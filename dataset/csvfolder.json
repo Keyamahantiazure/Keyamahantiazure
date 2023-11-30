@@ -2,7 +2,7 @@
 	"name": "csvfolder",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorage_parquet_src",
+			"referenceName": "AzureDataLakecsv",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "staging"
+				"folderPath": "customer",
+				"fileSystem": "csv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
