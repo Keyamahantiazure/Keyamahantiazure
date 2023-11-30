@@ -2,14 +2,23 @@
 	"name": "csvfolder",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakecsv",
+			"referenceName": "AzureDataLakeStorage_parquet_src",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
 				"folderPath": "customer",
 				"fileSystem": "csv"
 			},
